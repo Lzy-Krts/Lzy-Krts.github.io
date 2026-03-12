@@ -1,13 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bimsara's Webpage</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>This is a Heading</h1>
-<p>Riley loves japanese .</p>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="logo.png" alt="Logo" class="logo">
+      <span class="site-name">Bimsara</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HEADER / BIO -->
+  <header id="home" class="hero">
+    <img src="profile.jpg" alt="Picture of Bimsara" class="profile-pic">
+
+    <div class="hero-text">
+      <h1>Hi, I’m Bimsara</h1>
+      <p>
+        I’m a student in BIOL 101 learning computational and data skills for everyday biology.
+        This website is my personal webpage for Unit 4.
+      </p>
+    </div>
+  </header>
+
+  <!-- PORTFOLIO -->
+  <main class="container">
+    <section id="portfolio" class="card">
+      <h2>Portfolio</h2>
+      <p>Here is one of my class projects:</p>
+
+      <!-- Replace project1.html with your real project file name -->
+      <a class="button" href="Unit-2-Project.html" target="_blank">
+  		View My Class Project
+      </a>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+      <p>Email: youremail@example.com</p>
+    </section>
+  </main>
 
 </body>
 </html>
