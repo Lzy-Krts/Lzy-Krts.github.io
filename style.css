@@ -3,7 +3,158 @@ body {
   font-family: verdana, sans-serif;
   background-color: lightblue;
 }
+/* Background sky */
+body {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, #07131c, #305472);
+}
 
+/* Optional helper text like your SCSS used */
+body::before,
+body::after {
+  content: "CLICK & HOLD TO CREATE LIGHTNING";
+  font-family: Arial, Helvetica, serif;
+  font-size: 12px;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  bottom: 18px;
+  color: rgba(255, 255, 255, 0.25);
+  z-index: 0;
+  pointer-events: none;
+}
+body::before {
+  content: "HOVER SCREEN TO CHANGE WIND SPEED";
+  top: 18px;
+  bottom: auto;
+}
+body:active::before,
+body:active::after {
+  color: rgba(255, 255, 255, 0);
+  transition: color 0.5s ease;
+}
+
+/* Storm container sits behind your site content */
+.storm {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Rain layer */
+.rain {
+  position: absolute;
+  width: 120vw;
+  height: 100vh;
+  left: -10vw;
+  z-index: 0;
+  pointer-events: auto; /* we want hover/click to work here */
+  cursor: pointer;
+
+  /* wind control variable */
+  --angle: 91deg;
+}
+
+/* Interactive “wind” zones */
+.rain .left,
+.rain .right {
+  width: 20vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  pointer-events: auto;
+}
+.rain .left { left: 10vw; }
+.rain .left.center { left: 30vw; width: 20vw; }
+.rain .right { right: 10vw; left: auto; }
+.rain .right.center { right: 30vw; width: 20vw; }
+
+/* Little indicator icon (optional) */
+.rain::after {
+  content: "↯";
+  position: fixed;
+  left: calc(50% - 30px);
+  bottom: 45px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 35px;
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  padding: 13px 18px;
+  text-align: center;
+  line-height: 30px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  pointer-events: none;
+}
+
+/* Wind changes on hover */
+.rain .left:hover ~ .drop,
+.rain .left:hover ~ .drop * { /* harmless; keeps selector simple */ }
+.rain .left:hover { }
+.rain .left:hover ~ .drop { }
+
+.rain .left:hover { }
+.rain .left:hover ~ .drop { }
+
+.rain .left:hover { }
+.rain .left:hover ~ .drop { }
+
+.rain .left:hover { }
+
+.rain .left:hover ~ .drop { }
+
+/* We’ll set angle via JS instead (more reliable than complex sibling selectors) */
+
+/* Drops */
+.drop {
+  position: absolute;
+  top: -10vh;
+  width: 0;
+  height: 0;
+
+  /* triangle-ish streak like your border trick */
+  border: 0.25vmin solid transparent;
+  border-bottom-color: #abc2e9;
+
+  transform: rotate(var(--angle));
+  animation-name: fall;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+}
+
+/* Single keyframe (JS randomizes duration/delay) */
+@keyframes fall {
+  to {
+    transform: rotate(var(--angle)) translateX(calc(100vh + 5vmin));
+  }
+}
+
+/* Lightning flash (triggered with a class) */
+.rain.lightning {
+  animation: lightning 0.1s linear 0s 2, lightning 0.15s ease-out 0.25s 1;
+}
+@keyframes lightning {
+  50% {
+    background:
+      radial-gradient(circle at calc(50% - 10vw) -20%, rgba(255,255,255,0.25), rgba(255,255,255,0) 20%),
+      linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.15));
+  }
+}
+
+/* Make sure your real content is above the storm */
+.navbar,
+.hero,
+.container {
+  position: relative;
+  z-index: 1;
+}
 /* NAV BAR */
 .navbar {
   display: flex;

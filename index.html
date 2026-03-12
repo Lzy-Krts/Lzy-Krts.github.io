@@ -8,6 +8,15 @@
 </head>
 
 <body>
+  <!-- Storm background -->
+<div class="storm" aria-hidden="true">
+  <div class="rain" id="rain">
+    <div class="left"></div>
+    <div class="left center"></div>
+    <div class="right center"></div>
+    <div class="right"></div>
+  </div>
+</div>
 
   <!-- NAVIGATION -->
   <nav class="navbar">
@@ -50,9 +59,72 @@
 
     <section id="contact" class="card">
       <h2>Contact</h2>
-      <p>Email: youremail@example.com</p>
+      <p>Email: bimsara.abeysinghe@email.ucr.edu</p>
     </section>
   </main>
+ <script>
+    // Create raindrops
+  const rain = document.getElementById("rain");
+  const DROP_COUNT = 500;
 
+  for (let i = 0; i < DROP_COUNT; i++) {
+    const drop = document.createElement("div");
+    drop.className = "drop";
+
+    // Random look similar to SCSS random()
+    const opacity = 0.1 + Math.random() * 0.8;
+    const left = Math.random() * 120; // vw across 120vw
+    const borderLeft = 0.2 + Math.random() * 8; // vmin-ish feel
+    const duration = 0.2 + Math.random() * 2.0; // seconds
+    const delay = -Math.random() * 12.0; // negative delay for "already falling"
+
+    drop.style.opacity = opacity;
+    drop.style.left = left + "vw";
+    drop.style.borderLeftWidth = borderLeft * 0.1 + "vmin";
+    drop.style.animationDuration = duration + "s";
+    drop.style.animationDelay = delay + "s";
+
+    rain.appendChild(drop);
+  }
+
+  // Wind control by hover zones
+  const setAngle = (deg) => rain.style.setProperty("--angle", deg + "deg");
+
+  const zones = {
+    "left": 105,
+    "left center": 95,
+    "right center": 85,
+    "right": 75
+  };
+
+  [...rain.querySelectorAll(".left, .right")].forEach(el => {
+    el.addEventListener("mouseenter", () => {
+      const key = el.classList.contains("center")
+        ? (el.classList.contains("left") ? "left center" : "right center")
+        : (el.classList.contains("left") ? "left" : "right");
+      setAngle(zones[key]);
+    });
+    el.addEventListener("mouseleave", () => setAngle(91));
+  });
+
+  // Lightning on click/hold
+  let lightningTimer = null;
+
+  rain.addEventListener("mousedown", () => {
+    rain.classList.add("lightning");
+    lightningTimer = setInterval(() => {
+      rain.classList.remove("lightning");
+      // retrigger
+      void rain.offsetWidth;
+      rain.classList.add("lightning");
+    }, 700);
+  });
+
+  window.addEventListener("mouseup", () => {
+    rain.classList.remove("lightning");
+    if (lightningTimer) clearInterval(lightningTimer);
+    lightningTimer = null;
+  });
+  </script>
 </body>
 </html>
