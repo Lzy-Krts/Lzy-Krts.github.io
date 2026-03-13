@@ -225,7 +225,7 @@ body:active::after {
 
 .ucr-photo {
   width: 100%;
-  max-width: 390px;
+  max-width: 4500px;
   display: block;
   margin: 15px auto;
   border-radius: 12px;
